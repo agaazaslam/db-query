@@ -49,7 +49,7 @@ function App() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-w-sm min-h-screen flex flex-col">
         <nav className="bg-primary p-2 text-white flex justify-between  ">
 
           <div className="font-bold flex gap-2 text-white"> <Database /> DB QUERY  </div>
@@ -57,7 +57,7 @@ function App() {
 
         <div className="flex-col flex-grow  mx-auto  m-3 bg-primary mb-10" >
 
-          <div className="min-w-md md:min-w-6xl container h-[83vh] bg-base-300 overflow-y-auto p-4 ">
+          <div className="min-w-sm md:min-w-xl container h-[83vh] bg-base-300 overflow-y-auto p-4 ">
 
 
             <div className="chat chat-start">
