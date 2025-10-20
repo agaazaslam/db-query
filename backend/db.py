@@ -5,13 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI")
-
-
-
-
-
-
+MONGO_URI = os.getenv("PROD_MONGO_URI")
 
 def connection():
     client = None 
@@ -23,9 +17,7 @@ def connection():
     try:
         client = MongoClient(MONGO_URI)
         db = client["mydatabase"]
-        collection = db["sample_user"]
-        collection_2 = db["1mb_users"]
-        collection_3 = db["credit-users"]
+        collection = db["credit-users"]
 
 
         client.admin.command('ping')
@@ -33,7 +25,7 @@ def connection():
 
         ## Query for the db 
         data = scanfile('credit-data.json')
-        result = collection_3.insert_many(data)
+        result = collection.insert_many(data)
         print("inserted successfully ")
 
 
@@ -51,19 +43,6 @@ def scanfile(file_path):
     with open(file_path,"r" ) as file:
         data = json.load(file)
         return data
-
-def find_all(collection):
-    for entry in collection.find({} , {"name":1 , "language":1  }):
-        print(entry)
-
-def group_by_language(collection):
-    query = {"$group": {"_id": "$language", "count": {"$sum": 1}}  }
-    sort = {"$sort":{"count":-1}}
-
-    pipeline = [query , sort ]
-
-    for c in collection.aggregate(pipeline):
-        print(c)
 
 def query_with_pipeline(collection , pipeline):
     result = collection.aggregate(pipeline)

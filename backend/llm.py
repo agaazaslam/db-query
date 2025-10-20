@@ -6,12 +6,18 @@ from dotenv import load_dotenv
 import json
 load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI")
+
+ENV = os.getenv("ENVIRONMENT",'development') 
+
+if ENV == "production":
+    MONGO_URI= os.getenv("PROD_MONGO_URI")
+else:
+    MONGO_URI = os.getenv("DEV_MONGO_URI")
+
 
 client = MongoClient(MONGO_URI)
 db = client["mydatabase"]
 collection = db["credit-users"]
-collection_2 = db["1mb_users"]
 
 def query_db(query):
     """Query The DataBase by putting in the mongodb aggregration within"""
@@ -113,12 +119,4 @@ Keep the tone formal and concise.
 
     finally:
         print("exiting code execution")
-
-
-def main():
-    print("Testing llm locally")
-
-if __name__ == "__main__":
-    main()
-    llm_use("return the count each of each group of language ")
 
